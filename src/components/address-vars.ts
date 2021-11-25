@@ -1,4 +1,4 @@
 import { makeVar } from "@apollo/client";
-import type { AddressType } from './Address'
+import type { AddressBookRowType } from './AddressBookRow'
 
-export const addressListVar = makeVar<Array<AddressType | null>>([])
+export const addressListVar = makeVar<Array<AddressBookRowType | null>>([])

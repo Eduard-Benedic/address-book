@@ -21,7 +21,7 @@ enum Fields {
 
 }
 
-export default function AddressModal() {
+const ManualAddressModal = () => {
   const [line1, setLine1] = React.useState<string>('')
   const [line2, setLine2] = React.useState<string>('')
   const [line3, setLine3] = React.useState<string>('')
@@ -61,7 +61,7 @@ export default function AddressModal() {
 
   return (
     <Box>
-      <Button variant="outlined" onClick={handleClickOpen}>Add address</Button>
+      <Button sx={{ marginRight: 10 }} variant="outlined" onClick={handleClickOpen}>Add address</Button>
       <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Add an address</DialogTitle>
           <DialogContent>
@@ -143,3 +143,5 @@ export default function AddressModal() {
     </Box>
   );
 }
+
+export default ManualAddressModal;
