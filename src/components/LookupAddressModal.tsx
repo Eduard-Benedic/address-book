@@ -15,7 +15,6 @@ import { useReactiveVar } from '@apollo/client';
 import { isLookupModalOpen } from './address-vars';
 import AddressSuggestionItem from './AddressSuggestionItem';
 
-
 const LookupAddressModal = () => {
   const open = useReactiveVar(isLookupModalOpen)
   const [postcode, setPostcode] = React.useState<string>('')
@@ -61,17 +60,12 @@ const LookupAddressModal = () => {
                 {
                   lookupValues.map((lookup: any) => {
                     const { line_1, line_2, line_3, town_or_city, country} = lookup
-                    console.log(lookup)
                     return (
                       <AddressSuggestionItem
-                        line={{
-                          line1: line_1,
-                          line2: line_2,
-                          line3: line_3
-                        }}
+                        line={[line_1, line_2, line_3]}
                         town={town_or_city}
                         country={country}
-                        postcode={'asdasd'}
+                        postcode={postcode}
                       />)
                   })
                 }

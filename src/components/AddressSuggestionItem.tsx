@@ -3,11 +3,7 @@ import { addressListVar } from './address-vars';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 type AddressSugestionType = {
-  line: {
-    line1: string
-    line2: string
-    line3: string
-  }
+  line: [string, string, string]
   postcode: string
   town: string
   country: string
@@ -16,11 +12,7 @@ type AddressSugestionType = {
 const AddressSugestionItem = (props: AddressSugestionType) => {
   const addSuggestion = () => {
     addressListVar([...addressListVar(), {
-      line: {
-        line1: props.line.line1,
-        line2: props.line.line2,
-        line3: props.line.line3
-      },
+      line: props.line,
       postcode: props.postcode,
       town: props.town,
       country: props.country
@@ -32,9 +24,9 @@ const AddressSugestionItem = (props: AddressSugestionType) => {
         <ListItemText>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Box>
-              <p>{props.line.line1}</p>
-              {props.line.line2 ? <p>{props.line.line2}</p> : ''}
-              {props.line.line3 ? <p>{props.line.line3}</p> : ''}
+              <p>{props.line[0]}</p>
+              {props.line[1] ? <p>{props.line[1]}</p> : ''}
+              {props.line[2] ? <p>{props.line[2]}</p> : ''}
             </Box>
             <p>{props.town}</p>
             <p>{props.country}</p>

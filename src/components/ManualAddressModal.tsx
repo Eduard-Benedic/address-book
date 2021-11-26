@@ -1,5 +1,5 @@
-import * as React from 'react'
 import {
+    Autocomplete,
     Box,
     Button,
     TextField,
@@ -10,58 +10,51 @@ import {
     DialogTitle
 } from '@mui/material'
 import { useReactiveVar } from '@apollo/client'
+import { useForm } from 'react-hook-form'
+import { countries } from './countries'
 import { addressListVar, isManualModalOpen } from './address-vars'
 
-enum Fields {
-  Line1 = 'line1',
-  Line2 = 'line2',
-  Line3 = 'line3',
-  Postcode = 'postcode',
-  Town = 'town',
-  Country = 'country'
-}
-
 const ManualAddressModal = () => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    defaultValues: {
+      line1: '',
+      line2: '',
+      line3: '',
+      postcode: '',
+      town: '',
+      country: ''
+    }
+  })
   const open = useReactiveVar(isManualModalOpen)
-
-  const [line1, setLine1] = React.useState<string>('')
-  const [line2, setLine2] = React.useState<string>('')
-  const [line3, setLine3] = React.useState<string>('')
-  const [postcode, setPostcode] = React.useState<string>('')
-  const [town, setTown] = React.useState<string>('')
-  const [country, setCountry] = React.useState<string>('')
-
-  const handleTextFieldChange = (event: React.SyntheticEvent) => {
-    const target = event.target as any
-    if (target.id === Fields.Line1) setLine1(target.value)
-    if (target.id === Fields.Line2) setLine2(target.value)
-    if (target.id === Fields.Line3) setLine3(target.value)
-    if (target.id === Fields.Postcode) setPostcode(target.value)
-    if (target.id === Fields.Town) setTown(target.value)
-    if (target.id === Fields.Country) setCountry(target.value)
+  const onSubmit = (data: any) => {
+    addressListVar([...addressListVar(), {
+      ...data,
+      line: [data.line1, data.line2, data.line3]
+    }])
+    reset()
+    handleClose()
   }
   const handleClose = () => {
     isManualModalOpen(false)
   }
-  const addAddressToBook = () => {
-    const address  = {
-      line: {
-        line1,
-        line2,
-        line3
-      },
-      postcode,
-      town,
-      country
+  /**
+    * @remarks TextField expects an inputRef property not ref
+  */
+  const registerCreator = (fieldName: any, isRequired?: boolean) => {
+    if (isRequired) {
+      const { ref, ...inputProps } = register(fieldName, {
+        required: 'This field is required'
+      })
+      return {
+        inputRef: ref,
+        ...inputProps
+      }
     }
-    addressListVar([...addressListVar(), address])
-    handleClose()
-    setLine1('')
-    setLine2('')
-    setLine3('')
-    setTown('')
-    setPostcode('')
-    setCountry('')
+    const { ref, ...inputProps } = register(fieldName)
+    return {
+      inputRef: ref,
+      ...inputProps
+    }
   }
 
   return (
@@ -69,83 +62,92 @@ const ManualAddressModal = () => {
       <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Add an address</DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText sx={{ marginBottom: '40px' }}>
               Please enter your address below
             </DialogContentText>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <TextField
-                autoFocus
-                margin="dense"
-                id={Fields.Line1}
+                sx={{ width: '100%', marginBottom: '1.5rem' }}
+                id="line1"
                 label="Line 1"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={line1}
-                onChange={handleTextFieldChange}
+                error={!!errors.line1}
+                helperText={errors?.line1?.message}
+                {...registerCreator('line1', true)}
               />
-              <TextField
-                autoFocus
-                margin="dense"
-                id={Fields.Line2}
+             <TextField
+                sx={{ width: '100%', marginBottom: '1.5rem' }}
+                id="line2"
                 label="Line 2"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={line2}
-                onChange={handleTextFieldChange}
+                error={!!errors.line2}
+                helperText={errors?.line2?.message}
+                {...registerCreator('line2')}
               />
               <TextField
-                autoFocus
-                margin="dense"
-                id={Fields.Line3}
+                sx={{ width: '100%', marginBottom: '1.5rem' }}
+                id="line3"
                 label="Line 3"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={line3}
-                onChange={handleTextFieldChange}
+                error={!!errors.line3}
+                helperText={errors?.line3?.message}
+                {...registerCreator('line3')}
               />
               <TextField
-                  autoFocus
-                  margin="dense"
-                  id={Fields.Postcode}
-                  label="Postcode"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  value={postcode}
-                  onChange={handleTextFieldChange}
+                sx={{ width: '100%', marginBottom: '1.5rem' }}
+                id="town"
+                label="Town"
+                error={!!errors.town}
+                helperText={errors?.town?.message}
+                {...registerCreator('town', true)}
               />
               <TextField
-                  autoFocus
-                  margin="dense"
-                  id={Fields.Town}
-                  label="Town"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  value={town}
-                  onChange={handleTextFieldChange}
+                sx={{ width: '100%', marginBottom: '1.5rem' }}
+                id="postcode"
+                label="Postcode"
+                error={!!errors.postcode}
+                helperText={errors?.postcode?.message}
+                {...registerCreator('postcode', true)}
               />
-              <TextField
-                  autoFocus
-                  margin="dense"
-                  id={Fields.Country}
-                  label="Country"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  value={country}
-                  onChange={handleTextFieldChange}
+              <Autocomplete
+                id="country-select"
+                sx={{ width: 300 }}
+                options={countries}
+                autoHighlight
+                getOptionLabel={(option) => option.label}
+                renderOption={(props, option) => (
+                  <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                    <img
+                      loading="lazy"
+                      width="20"
+                      src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                      srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                      alt=""
+                    />
+                    {option.label}
+                  </Box>
+                )}
+                renderInput={(params) => {
+                  return (
+                    <TextField
+                      error={!!errors.country}
+                      {...registerCreator('country', true)}
+                      {...params}
+                      label="Choose a country"
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: 'new-password'// disable autocomplete and autofill
+                      }}
+                    />
+                  )
+                }}
               />
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button type="submit">Add</Button>
+              </DialogActions>
+            </form>
           </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={addAddressToBook}>Add</Button>
-        </DialogActions>
       </Dialog>
     </Box>
   );
 }
 
-export default ManualAddressModal;
+export default ManualAddressModal

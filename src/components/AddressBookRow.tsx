@@ -1,11 +1,7 @@
 import { List, ListItem, TableRow, TableCell, styled } from '@mui/material'
 
 export type AddressBookRowType = {
-    line: {
-        line1: string
-        line2: string
-        line3: string
-    }
+    line: [string, string, string]
     postcode: string
     town: string
     country: string
@@ -25,9 +21,9 @@ const AddressBookRow = (props: AddressBookRowType) => {
         <Wrapper>
             <TableCell>
                 <List sx={{ display: 'flex', flexDirection: 'column' }}>
-                    {props.line.line1 ? <ListItem>Line1: {props.line.line1}</ListItem> : ''}
-                    {props.line.line2 ? <ListItem>Line2: {props.line.line2}</ListItem> : ''}
-                    {props.line.line3 ? <ListItem>Line3: {props.line.line3}</ListItem> : ''}
+                    <ListItem>Line1: {props.line[0]}</ListItem>
+                    {props.line[1] ? <ListItem>Line2: {props.line[1]}</ListItem> : ''}
+                    {props.line[2] ? <ListItem>Line3: {props.line[2]}</ListItem> : ''}
                 </List>
             </TableCell>
             <TableCell>{props.postcode}</TableCell>
