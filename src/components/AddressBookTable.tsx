@@ -18,11 +18,11 @@ const AddressBookTable = () => {
     return (
         <Box>
             <ActionBar />
-            <TableContainer sx={{  }}>
+            <TableContainer>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Line 1</TableCell>
+                            <TableCell>Line</TableCell>
                             <TableCell>Postcode</TableCell>
                             <TableCell>Town</TableCell>
                             <TableCell>Country</TableCell>

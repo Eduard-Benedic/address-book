@@ -1,12 +1,55 @@
-import { Box } from '@mui/material'
-import ManualAddressModal from "./ManualAddressModal";
-import LookupAddressModal from './LookupAddressModal';
+import * as React from 'react'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormControlLabel
+} from '@mui/material'
+import Switch from '@mui/material/Switch'
+import { isLookupModalOpen, isManualModalOpen } from './address-vars'
+import ManualAddressModal from "./ManualAddressModal"
+import LookupAddressModal from './LookupAddressModal'
 
 const ActionBar = () => {
+  const [isLookupMode, setIsLookupMode] = React.useState<boolean>(false)
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsLookupMode(event?.target.checked)
+  }
+  const handleClickOpen = () => {
+    if (isLookupMode) {
+      isLookupModalOpen(true)
+      isManualModalOpen(false)
+    } else {
+      isLookupModalOpen(false)
+      isManualModalOpen(true)
+    }
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
-      <ManualAddressModal />
-      <LookupAddressModal />
+      <Box>
+        <ManualAddressModal />
+        <LookupAddressModal />
+      </Box>
+
+    <Button
+      sx={{ marginRight: 10 }}
+      variant="outlined"
+      onClick={handleClickOpen}
+    >
+      Add address
+    </Button>
+      <FormControl>
+        <FormLabel component="legend">Enable lookup mode</FormLabel>
+        <FormGroup>
+          <FormControlLabel
+            control={<Switch checked={isLookupMode} onChange={handleChange} name="Lookup Mpde"/>}
+            label="Lookup" />
+        </FormGroup>
+      </FormControl>
     </Box>
   )
 }

@@ -8,17 +8,22 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle
+    DialogTitle,
+    List
 } from '@mui/material'
+import { useReactiveVar } from '@apollo/client';
+import { isLookupModalOpen } from './address-vars';
+import AddressSuggestionItem from './AddressSuggestionItem';
 
-const LooupAddressModal = () => {
+
+const LookupAddressModal = () => {
+  const open = useReactiveVar(isLookupModalOpen)
   const [postcode, setPostcode] = React.useState<string>('')
   const [lookupValues, setLookupValues] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => { setOpen(true); };
-
-  const handleClose = () => { setOpen(false); };
+  const handleClose = () => {
+    isLookupModalOpen(false)
+  }
 
   const handleTextFieldChange = (event: React.SyntheticEvent) => {
     const target = event.target as any
@@ -34,8 +39,11 @@ const LooupAddressModal = () => {
 
   return (
     <Box>
-      <Button sx={{ marginRight: 10 }} variant="outlined" onClick={handleClickOpen}>Lookup address</Button>
-      <Dialog open={open} onClose={handleClose} fullWidth={true as boolean}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth={true as boolean}
+      >
           <DialogTitle>Please enter a postcode</DialogTitle>
           <DialogContent>
               <TextField
@@ -49,15 +57,25 @@ const LooupAddressModal = () => {
                 value={postcode}
                 onChange={handleTextFieldChange}
               />
-              {
-                lookupValues.map((lookup: any) => (
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <p>{lookup.line_1}</p>
-                    <p>{lookup.country}</p>
-                    <p>{lookup.town_or_city}</p>
-                  </Box>
-                ))
-              }
+              <List>
+                {
+                  lookupValues.map((lookup: any) => {
+                    const { line_1, line_2, line_3, town_or_city, country} = lookup
+                    console.log(lookup)
+                    return (
+                      <AddressSuggestionItem
+                        line={{
+                          line1: line_1,
+                          line2: line_2,
+                          line3: line_3
+                        }}
+                        town={town_or_city}
+                        country={country}
+                        postcode={'asdasd'}
+                      />)
+                  })
+                }
+              </List>
           </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -68,4 +86,4 @@ const LooupAddressModal = () => {
   );
 }
 
-export default LooupAddressModal;
+export default LookupAddressModal

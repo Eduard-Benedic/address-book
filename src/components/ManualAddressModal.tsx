@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 import {
     Box,
     Button,
@@ -9,7 +9,8 @@ import {
     DialogContentText,
     DialogTitle
 } from '@mui/material'
-import { addressListVar } from './address-vars';
+import { useReactiveVar } from '@apollo/client'
+import { addressListVar, isManualModalOpen } from './address-vars'
 
 enum Fields {
   Line1 = 'line1',
@@ -18,25 +19,17 @@ enum Fields {
   Postcode = 'postcode',
   Town = 'town',
   Country = 'country'
-
 }
 
 const ManualAddressModal = () => {
+  const open = useReactiveVar(isManualModalOpen)
+
   const [line1, setLine1] = React.useState<string>('')
   const [line2, setLine2] = React.useState<string>('')
   const [line3, setLine3] = React.useState<string>('')
   const [postcode, setPostcode] = React.useState<string>('')
   const [town, setTown] = React.useState<string>('')
   const [country, setCountry] = React.useState<string>('')
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleTextFieldChange = (event: React.SyntheticEvent) => {
     const target = event.target as any
@@ -47,21 +40,32 @@ const ManualAddressModal = () => {
     if (target.id === Fields.Town) setTown(target.value)
     if (target.id === Fields.Country) setCountry(target.value)
   }
-
+  const handleClose = () => {
+    isManualModalOpen(false)
+  }
   const addAddressToBook = () => {
     const address  = {
-      line: line1,
+      line: {
+        line1,
+        line2,
+        line3
+      },
       postcode,
       town,
       country
     }
     addressListVar([...addressListVar(), address])
     handleClose()
+    setLine1('')
+    setLine2('')
+    setLine3('')
+    setTown('')
+    setPostcode('')
+    setCountry('')
   }
 
   return (
     <Box>
-      <Button sx={{ marginRight: 10 }} variant="outlined" onClick={handleClickOpen}>Add address</Button>
       <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Add an address</DialogTitle>
           <DialogContent>
