@@ -13,7 +13,7 @@ import {
     CircularProgress
 } from '@mui/material'
 import { useReactiveVar } from '@apollo/client';
-import { isLookupModalOpen } from './address-vars';
+import { isLookupModalOpen } from './reactive-vars';
 import AddressSuggestionItem from './AddressSuggestionItem';
 
 const LookupAddressModal = () => {

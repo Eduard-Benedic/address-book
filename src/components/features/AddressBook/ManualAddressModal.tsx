@@ -12,7 +12,7 @@ import {
 import { useReactiveVar } from '@apollo/client'
 import { useForm } from 'react-hook-form'
 import { countries } from './countries'
-import { addressListVar, isManualModalOpen } from './address-vars'
+import { addressListVar, isManualModalOpen } from './reactive-vars'
 
 const ManualAddressModal = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm({

@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@mui/material'
 import { Container } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
-import AddressBookTable from 'components/AddressBookTable';
+import AddressBook from 'components/features/AddressBook/AddressBook'
 import theme from './theme/index'
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         }}
       >
         <CssBaseline />
-        <AddressBookTable />
+        <AddressBook />
       </Container>
     </ThemeProvider>
   );

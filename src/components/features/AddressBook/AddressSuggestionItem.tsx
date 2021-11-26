@@ -1,5 +1,5 @@
 import { Box, Typography, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import { addressListVar } from './address-vars';
+import { addressListVar } from './reactive-vars';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 type AddressSugestionType = {

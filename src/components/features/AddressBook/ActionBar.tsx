@@ -8,7 +8,8 @@ import {
   FormControlLabel
 } from '@mui/material'
 import Switch from '@mui/material/Switch'
-import { isLookupModalOpen, isManualModalOpen } from './address-vars'
+import { isLookupModalOpen, isManualModalOpen } from './reactive-vars'
+
 import ManualAddressModal from "./ManualAddressModal"
 import LookupAddressModal from './LookupAddressModal'
 
