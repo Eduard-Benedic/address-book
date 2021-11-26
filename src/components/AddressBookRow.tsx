@@ -1,4 +1,11 @@
-import { List, ListItem, TableRow, TableCell, styled } from '@mui/material'
+import {
+    List,
+    ListItem,
+    TableRow,
+    TableCell,
+    styled,
+    Typography
+} from '@mui/material'
 
 export type AddressBookRowType = {
     line: [string, string, string]
@@ -7,29 +14,40 @@ export type AddressBookRowType = {
     country: string
 }
 
-const Wrapper = styled(TableRow)(({ theme }) => ({
-    // display: 'flex',
-    // justifyContent: 'space-between',
-    // paddingTop: theme.spacing(1),
-    // paddingBottom: theme.spacing(1),
-    // paddingLeft: theme.spacing(2),
-    // paddingRight: theme.spacing(2)
+const StyledSubtitle = styled(Typography)(({ theme }) => ({
+    color: theme.palette.primary.dark,
+    fontWeight: 'bold',
+    fontSize: '.8rem',
+    minWidth: theme.spacing(8)
 }))
 
 const AddressBookRow = (props: AddressBookRowType) => {
+
+    const renderFieldIndicator = (title: string, val?: string) => {
+        if (val) {
+            return (
+                <ListItem>
+                    <StyledSubtitle>{title}</StyledSubtitle>
+                    <Typography>{val}</Typography>
+                </ListItem>
+            )
+        }
+    }
     return (
-        <Wrapper>
+        <TableRow>
             <TableCell>
                 <List sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <ListItem>Line1: {props.line[0]}</ListItem>
-                    {props.line[1] ? <ListItem>Line2: {props.line[1]}</ListItem> : ''}
-                    {props.line[2] ? <ListItem>Line3: {props.line[2]}</ListItem> : ''}
+                    <ListItem>
+                        <StyledSubtitle>Line 1</StyledSubtitle>{props.line[0]}
+                    </ListItem>
+                    {renderFieldIndicator('Line 2', props.line[1])}
+                    {renderFieldIndicator('Line 3', props.line[2])}
                 </List>
             </TableCell>
             <TableCell>{props.postcode}</TableCell>
             <TableCell>{props.town}</TableCell>
             <TableCell>{props.country}</TableCell>
-        </Wrapper>
+        </TableRow>
     )
 }
 

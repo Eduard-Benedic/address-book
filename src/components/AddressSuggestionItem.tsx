@@ -1,4 +1,4 @@
-import { Box, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { Box, Typography, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { addressListVar } from './address-vars';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
@@ -24,16 +24,16 @@ const AddressSugestionItem = (props: AddressSugestionType) => {
         <ListItemText>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Box>
-              <p>{props.line[0]}</p>
-              {props.line[1] ? <p>{props.line[1]}</p> : ''}
-              {props.line[2] ? <p>{props.line[2]}</p> : ''}
+              <Typography>{props.line[0]}</Typography>
+              {props.line[1] ? <Typography>{props.line[1]}</Typography> : ''}
+              {props.line[2] ? <Typography>{props.line[2]}</Typography> : ''}
             </Box>
-            <p>{props.town}</p>
-            <p>{props.country}</p>
+            <Typography>{props.town}</Typography>
+            <Typography>{props.country}</Typography>
           </Box>
         </ListItemText>
-        <ListItemIcon sx={{ marginLeft: (theme) => theme.spacing(5) }}>
-          <AddCircleIcon />
+        <ListItemIcon sx={{ marginLeft: (theme) => theme.spacing(10) }}>
+          <AddCircleIcon color="primary"  fontSize="large" />
         </ListItemIcon>
       </ListItemButton>
     </ListItem>

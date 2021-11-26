@@ -139,9 +139,21 @@ const ManualAddressModal = () => {
                   )
                 }}
               />
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit">Add</Button>
+              <DialogActions sx={{ paddingTop: (theme) => theme.spacing(4) }}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  Add
+                </Button>
               </DialogActions>
             </form>
           </DialogContent>

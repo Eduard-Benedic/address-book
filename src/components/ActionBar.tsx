@@ -37,7 +37,8 @@ const ActionBar = () => {
 
     <Button
       sx={{ marginRight: 10 }}
-      variant="outlined"
+      variant="contained"
+      color="primary"
       onClick={handleClickOpen}
     >
       Add address
