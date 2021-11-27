@@ -6,98 +6,6 @@ export const data = {
   "addresses": [
       {
           "formatted_address": [
-              "Flat 1",
-              "2 Watkin Terrace",
-              "",
-              "Northampton",
-              "Northamptonshire"
-          ],
-          "thoroughfare": "Watkin Terrace",
-          "building_name": "",
-          "sub_building_name": "Flat 1",
-          "sub_building_number": "1",
-          "building_number": "2",
-          "line_1": "Flat 1",
-          "line_2": "2 Watkin Terrace",
-          "line_3": "",
-          "line_4": "",
-          "locality": "",
-          "town_or_city": "Northampton",
-          "county": "Northamptonshire",
-          "district": "Northampton",
-          "country": "England"
-      },
-      {
-          "formatted_address": [
-              "Flat 1",
-              "20 Watkin Terrace",
-              "",
-              "Northampton",
-              "Northamptonshire"
-          ],
-          "thoroughfare": "Watkin Terrace",
-          "building_name": "",
-          "sub_building_name": "Flat 1",
-          "sub_building_number": "1",
-          "building_number": "20",
-          "line_1": "Flat 1",
-          "line_2": "20 Watkin Terrace",
-          "line_3": "",
-          "line_4": "",
-          "locality": "",
-          "town_or_city": "Northampton",
-          "county": "Northamptonshire",
-          "district": "Northampton",
-          "country": "England"
-      },
-      {
-          "formatted_address": [
-              "Flat 8",
-              "Watkin Court",
-              "Watkin Terrace",
-              "Northampton",
-              "Northamptonshire"
-          ],
-          "thoroughfare": "Watkin Terrace",
-          "building_name": "Watkin Court",
-          "sub_building_name": "Flat 8",
-          "sub_building_number": "8",
-          "building_number": "",
-          "line_1": "Flat 8",
-          "line_2": "Watkin Court",
-          "line_3": "Watkin Terrace",
-          "line_4": "",
-          "locality": "",
-          "town_or_city": "Northampton",
-          "county": "Northamptonshire",
-          "district": "Northampton",
-          "country": "England"
-      },
-      {
-          "formatted_address": [
-              "Flat 9",
-              "Watkin Court",
-              "Watkin Terrace",
-              "Northampton",
-              "Northamptonshire"
-          ],
-          "thoroughfare": "Watkin Terrace",
-          "building_name": "Watkin Court",
-          "sub_building_name": "Flat 9",
-          "sub_building_number": "9",
-          "building_number": "",
-          "line_1": "Flat 9",
-          "line_2": "Watkin Court",
-          "line_3": "Watkin Terrace",
-          "line_4": "",
-          "locality": "",
-          "town_or_city": "Northampton",
-          "county": "Northamptonshire",
-          "district": "Northampton",
-          "country": "England"
-      },
-      {
-          "formatted_address": [
               "Gaston Transport Inc Ltd",
               "14 Watkin Terrace",
               "",
@@ -166,14 +74,4 @@ export const data = {
           "country": "England"
       }
   ]
-}
-
-export const fetchData = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-    //   resolve(data)
-        resolve(data)
-    //   reject({ response: { data: { Message: 'Nice try' } } })
-    }, 2000)
-  })
 }

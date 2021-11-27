@@ -12,7 +12,8 @@ import {
 import { useReactiveVar } from '@apollo/client'
 import { useForm } from 'react-hook-form'
 import { countries } from './countries'
-import { addressListVar, isManualModalOpen } from './reactive-vars'
+import { isManualModalOpen } from './reactive-vars'
+import { addressMutations } from 'operations/mutations/index'
 
 const ManualAddressModal = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -27,10 +28,7 @@ const ManualAddressModal = () => {
   })
   const open = useReactiveVar(isManualModalOpen)
   const onSubmit = (data: any) => {
-    addressListVar([...addressListVar(), {
-      ...data,
-      line: [data.line1, data.line2, data.line3]
-    }])
+    addressMutations.addAddress([data.line1, data.line2, data.line3], data.postcode, data.town, data.country)
     reset()
     handleClose()
   }

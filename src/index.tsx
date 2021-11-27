@@ -1,11 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ApolloProvider, ApolloClient } from '@apollo/client';
+import { cache } from './cache'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+export const client = new ApolloClient({
+  cache,
+  connectToDevTools: true
+})
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

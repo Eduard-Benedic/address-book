@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 
 export type AddressBookRowType = {
-    line: [string, string, string]
+    line: Array<string>
     postcode: string
     town: string
     country: string
@@ -26,9 +26,9 @@ const AddressBookRow = (props: AddressBookRowType) => {
             <TableCell>
                 <List sx={{ display: 'flex', flexDirection: 'column' }}>
                     <ListItem>
-                        <StyledSubtitle>{props.line[0]},</StyledSubtitle>
-                        {props.line[1] && <StyledSubtitle>{props.line[1]},</StyledSubtitle>}
-                        {props.line[2] && <StyledSubtitle>{props.line[2]}</StyledSubtitle>}
+                        <StyledSubtitle  data-testid="line1">{props.line[0]}</StyledSubtitle>
+                        {props.line[1] && <StyledSubtitle data-testid="line2">{props.line[1]}</StyledSubtitle>}
+                        {props.line[2] && <StyledSubtitle data-testid="line2">{props.line[2]}</StyledSubtitle>}
                     </ListItem>
                 </List>
             </TableCell>

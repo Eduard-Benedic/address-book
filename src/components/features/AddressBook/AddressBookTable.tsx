@@ -1,4 +1,5 @@
 import {
+  Box,
   TableContainer,
   Table,
   TableBody,
@@ -8,9 +9,9 @@ import {
   styled
 } from '@mui/material'
 import { grey } from '@mui/material/colors'
+import { useQuery } from '@apollo/client'
+import { GET_ALL_ADDRESS_ELEMENTS } from 'operations/queries/getAllAddressElements'
 import AddressBookRow from './AddressBookRow'
-import { useReactiveVar } from '@apollo/client'
-import { addressListVar } from './reactive-vars'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => (
   {
@@ -22,25 +23,31 @@ const StyledTableCell = styled(TableCell)(({ theme }) => (
 ))
 
 const AddressBookTable = () => {
-  const addressList = useReactiveVar(addressListVar)
+  const { data, loading } = useQuery(GET_ALL_ADDRESS_ELEMENTS, {
+    fetchPolicy: 'cache-and-network'
+  })
   return (
-    <TableContainer>
-      <Table>
-          <TableHead>
-              <TableRow>
-                  <StyledTableCell>Line</StyledTableCell>
-                  <StyledTableCell>Postcode</StyledTableCell>
-                  <StyledTableCell>Town</StyledTableCell>
-                  <StyledTableCell>Country</StyledTableCell>
-              </TableRow>
-          </TableHead>
-          <TableBody>
-              {addressList.map((address: any, index) => (
-                  <AddressBookRow key={index} {...address} />
-              ))}
-          </TableBody>
-      </Table>
-    </TableContainer>
+    <Box>
+      {data.addressList.length > 0 && (
+        <TableContainer>
+          <Table>
+              <TableHead>
+                  <TableRow>
+                      <StyledTableCell>Line</StyledTableCell>
+                      <StyledTableCell>Postcode</StyledTableCell>
+                      <StyledTableCell>Town</StyledTableCell>
+                      <StyledTableCell>Country</StyledTableCell>
+                  </TableRow>
+              </TableHead>
+              <TableBody>
+                  {data.addressList.map((address: any, index: number) => (
+                      <AddressBookRow key={index} {...address} />
+                  ))}
+              </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </Box>
   )
 }
 

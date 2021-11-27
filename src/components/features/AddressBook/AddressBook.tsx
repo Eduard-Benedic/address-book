@@ -3,13 +3,10 @@ import {
     Typography
 } from '@mui/material'
 import AddressBookTable from './AddressBookTable'
-import { useReactiveVar } from '@apollo/client'
-import ActionBar from './ActionBar'
 import Logo from 'components/Logo'
-import { addressListVar } from './reactive-vars'
+import ActionBar from './ActionBar'
 
 const AddressBook = () => {
-    const addressList = useReactiveVar(addressListVar)
     return (
         <Box
             sx={{
@@ -34,9 +31,7 @@ const AddressBook = () => {
             <Box sx={{ paddingBottom: (theme) => theme.spacing(8) }}>
                 <ActionBar />
             </Box>
-            {
-                addressList.length > 0 && <AddressBookTable />
-            }
+            <AddressBookTable />
         </Box>
     )
 }
