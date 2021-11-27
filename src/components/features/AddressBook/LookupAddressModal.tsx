@@ -1,6 +1,5 @@
 import * as React from 'react';
 // import axios from 'axios';
-import { fetchData } from './data';
 import {
     Box,
     Button,
@@ -15,9 +14,13 @@ import {
 import { useReactiveVar } from '@apollo/client';
 import { isLookupModalOpen } from './reactive-vars';
 import AddressSuggestionItem from './AddressSuggestionItem';
+import { fetchAddress } from './AddressBookAPI';
 
 const LookupAddressModal = () => {
   const open = useReactiveVar(isLookupModalOpen)
+  const [isPostcodeInvalid, setIsPostcodeInvalid] = React.useState<boolean>(false)
+  const [helperText, setHelperText] = React.useState<string>('')
+
   const [postcode, setPostcode] = React.useState<string>('')
   const [lookupValues, setLookupValues] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -33,10 +36,18 @@ const LookupAddressModal = () => {
 
   const makeCall = () => {
       setIsLoading(true)
-      fetchData()
+      fetchAddress(postcode, true)
         .then((data: any) => {
           setIsLoading(false)
+          setIsPostcodeInvalid(false)
+          setHelperText('')
           setLookupValues(data.addresses)
+        })
+        .catch((err) => {
+          console.log(err.response.data, 'err')
+          setIsLoading(false)
+          setIsPostcodeInvalid(true)
+          setHelperText(err.response.data.Message)
         })
   }
 
@@ -50,6 +61,8 @@ const LookupAddressModal = () => {
           <DialogTitle>Please enter a postcode</DialogTitle>
           <DialogContent>
               <TextField
+                error={isPostcodeInvalid}
+                helperText={helperText}
                 autoFocus
                 margin="dense"
                 id="lookup-postcode"

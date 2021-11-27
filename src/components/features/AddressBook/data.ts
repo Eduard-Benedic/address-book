@@ -171,7 +171,9 @@ export const data = {
 export const fetchData = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(data)
+    //   resolve(data)
+        resolve(data)
+    //   reject({ response: { data: { Message: 'Nice try' } } })
     }, 2000)
   })
 }

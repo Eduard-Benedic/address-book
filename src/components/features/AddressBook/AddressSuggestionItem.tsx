@@ -23,16 +23,16 @@ const AddressSugestionItem = (props: AddressSugestionType) => {
       <ListItemButton>
         <ListItemText>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box>
-              <Typography>{props.line[0]}</Typography>
-              {props.line[1] ? <Typography>{props.line[1]}</Typography> : ''}
-              {props.line[2] ? <Typography>{props.line[2]}</Typography> : ''}
+            <Box sx={{ marginRight: '15px' }}>
+              <Typography component="span">{props.line[0]}</Typography>
+              {props.line[1] && <Typography component="span">, {props.line[1]}</Typography>}
+              {props.line[2] && <Typography component="span">, {props.line[2]}</Typography>}
             </Box>
-            <Typography>{props.town}</Typography>
+            <Typography sx={{ marginRight: '15px' }}>{props.town}</Typography>
             <Typography>{props.country}</Typography>
           </Box>
         </ListItemText>
-        <ListItemIcon sx={{ marginLeft: (theme) => theme.spacing(10) }}>
+        <ListItemIcon sx={{ marginLeft: (theme) => theme.spacing(4) }}>
           <AddCircleIcon color="primary"  fontSize="large" />
         </ListItemIcon>
       </ListItemButton>
