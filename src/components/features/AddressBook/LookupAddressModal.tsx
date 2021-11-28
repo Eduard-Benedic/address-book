@@ -11,9 +11,11 @@ import {
     List,
     CircularProgress
 } from '@mui/material'
-import { useReactiveVar } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid'
-import { isLookupModalOpen } from './reactive-vars';
+import { useQuery } from '@apollo/client'
+import { GET_MODAL_STATES } from './operations/queries/getModalStates'
+import { addressMutations } from './operations/mutations/index'
+
 import AddressSuggestionItem from './AddressSuggestionItem';
 import { fetchAddress } from './AddressBookAPI';
 
@@ -26,37 +28,44 @@ const useErrorAndLoadingState = () => {
   const [errorState, setErrorState] = React.useState<boolean>(false)
   const [errorMessage, setErrorMessage] = React.useState<string>('')
   const [loadingState, setLoadingState] = React.useState<boolean>(false)
-  const setState = (state: boolean, message: string, loading?: boolean) => {
+  const setState = (state: boolean, message: string, loading: boolean) => {
     setErrorState(state)
     setErrorMessage(message)
-    if (loading) {
-      setLoadingState(loading)
-    }
+    setLoadingState(loading)
   }
   return [{ hasError: errorState, message: errorMessage, loading: loadingState }, setState] as const
 }
 
+
 const LookupAddressModal = () => {
   const [errorAndLoadingState, setErrorAndLoadingState] = useErrorAndLoadingState()
-  const [postcode, setPostcode] = React.useState<string>('')
-  const [lookupValues, setLookupValues] = React.useState([]);
-  const open = useReactiveVar(isLookupModalOpen)
+  const [postcodeInput, setPostcodeInput] = React.useState<string>('')
+  const [addressSuggestions, setAddressSuggestions] = React.useState<any>({ addresses: [], postcode: '' });
+  const { data: modals } = useQuery(GET_MODAL_STATES, {
+    fetchPolicy: 'cache-and-network'
+  })
+  const open = modals.modalStates.lookup
+  const handleClose = () => {
+    addressMutations.switchModalStates(false, false)
+  }
 
-  const handleClose = () => { isLookupModalOpen(false) }
   /** * @remarks the API endpoint used requires a specific format(no spaces and lowercase)*/
   const formatPostcode = (text: string) => text.trim().replace(/ /g,'').toLowerCase()
   const fetchLookupAddresses = () => {
-      if (postcode === '') {
-        setErrorAndLoadingState(true, 'Empty value not allowed')
+      if (postcodeInput === '') {
+        setErrorAndLoadingState(true, 'Empty value not allowed', false)
         return
       }
       setErrorAndLoadingState(false, '', true)
-      fetchAddress(formatPostcode(postcode))
+      fetchAddress(formatPostcode(postcodeInput))
         .then((data: any) => {
           setErrorAndLoadingState(false, '', false)
-          setLookupValues(data.addresses)
+          setAddressSuggestions({
+            addresses: data.addresses,
+            postcode: data.postcode
+          })
         })
-        .catch((err) => setErrorAndLoadingState(false, err.response.data.Message, false))
+        .catch((err) => setErrorAndLoadingState(true, err.response.data.Message, false))
   }
 
   return (
@@ -77,8 +86,8 @@ const LookupAddressModal = () => {
                 type="text"
                 fullWidth
                 variant="standard"
-                value={postcode}
-                onChange={(e) => setPostcode(e.target.value)}
+                value={postcodeInput}
+                onChange={(e) => setPostcodeInput(e.target.value)}
               />
               <List sx={{ minHeight: '100px' }}>
                 {
@@ -87,20 +96,19 @@ const LookupAddressModal = () => {
                     <CircularProgress />
                   </Box>
                   : (
-                    lookupValues.map((lookup: any) => {
+                    addressSuggestions.addresses.map((address: any) => {
                       /**
                        * @remarks to see shape of the data returned go to https://getaddress.io/
                        * 
                        */
-                      const { line_1, line_2, line_3, town_or_city, country} = lookup
-                      console.log(lookup)
+                      const { line_1, line_2, line_3, town_or_city, country} = address
                       return (
                         <AddressSuggestionItem
                           key={uuidv4()}
                           line={[line_1, line_2, line_3]}
                           town={town_or_city}
                           country={country}
-                          postcode={postcode}
+                          postcode={addressSuggestions.postcode}
                         />
                       )
                     })

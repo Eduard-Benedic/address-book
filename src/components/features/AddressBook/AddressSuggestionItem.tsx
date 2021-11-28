@@ -1,5 +1,5 @@
 import { Box, Typography, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import { addressMutations } from 'operations/mutations'
+import { addressMutations } from './operations/mutations/index'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 
 type AddressSugestionType = {
@@ -14,7 +14,10 @@ const AddressSugestionItem = (props: AddressSugestionType) => {
     addressMutations.addAddress(props.line, props.postcode, props.town, props.country)
   }
   return (
-    <ListItem onClick={addSuggestion}>
+    <ListItem
+      onClick={addSuggestion}
+      data-testid="address-suggestion-item"
+    >
       <ListItemButton>
         <ListItemText>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

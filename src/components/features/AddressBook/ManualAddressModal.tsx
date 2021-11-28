@@ -9,13 +9,22 @@ import {
     DialogContentText,
     DialogTitle
 } from '@mui/material'
-import { useReactiveVar } from '@apollo/client'
 import { useForm } from 'react-hook-form'
+import { useQuery } from '@apollo/client'
+import { GET_MODAL_STATES } from './operations/queries/getModalStates'
+import { addressMutations } from './operations/mutations/index'
 import { countries } from './countries'
-import { isManualModalOpen } from './reactive-vars'
-import { addressMutations } from 'operations/mutations/index'
 
 const ManualAddressModal = () => {
+  const { data: modals } = useQuery(GET_MODAL_STATES, {
+    fetchPolicy: 'cache-and-network'
+  })
+  const open = modals.modalStates.manual
+
+  const handleClose = () => {
+    addressMutations.switchModalStates(false, false)
+  }
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
       line1: '',
@@ -26,15 +35,13 @@ const ManualAddressModal = () => {
       country: ''
     }
   })
-  const open = useReactiveVar(isManualModalOpen)
+
   const onSubmit = (data: any) => {
     addressMutations.addAddress([data.line1, data.line2, data.line3], data.postcode, data.town, data.country)
     reset()
     handleClose()
   }
-  const handleClose = () => {
-    isManualModalOpen(false)
-  }
+
   /**
     * @remarks TextField expects an inputRef property not ref
   */
@@ -70,6 +77,9 @@ const ManualAddressModal = () => {
                 label="Line 1"
                 error={!!errors.line1}
                 helperText={errors?.line1?.message}
+                inputProps={{
+                  "data-testid": "line1"
+                }}
                 {...registerCreator('line1', true)}
               />
              <TextField
@@ -78,6 +88,9 @@ const ManualAddressModal = () => {
                 label="Line 2"
                 error={!!errors.line2}
                 helperText={errors?.line2?.message}
+                inputProps={{
+                  "data-testid": "line2"
+                }}
                 {...registerCreator('line2')}
               />
               <TextField
@@ -86,6 +99,9 @@ const ManualAddressModal = () => {
                 label="Line 3"
                 error={!!errors.line3}
                 helperText={errors?.line3?.message}
+                inputProps={{
+                  "data-testid": "line3"
+                }}
                 {...registerCreator('line3')}
               />
               <TextField
@@ -94,6 +110,9 @@ const ManualAddressModal = () => {
                 label="Town"
                 error={!!errors.town}
                 helperText={errors?.town?.message}
+                inputProps={{
+                  "data-testid": "town"
+                }}
                 {...registerCreator('town', true)}
               />
               <TextField
@@ -102,6 +121,9 @@ const ManualAddressModal = () => {
                 label="Postcode"
                 error={!!errors.postcode}
                 helperText={errors?.postcode?.message}
+                inputProps={{
+                  "data-testid": "postcode"
+                }}
                 {...registerCreator('postcode', true)}
               />
               <Autocomplete
@@ -131,7 +153,8 @@ const ManualAddressModal = () => {
                       label="Choose a country"
                       inputProps={{
                         ...params.inputProps,
-                        autoComplete: 'new-password'// disable autocomplete and autofill
+                        autoComplete: 'new-password',// disable autocomplete and autofill
+                        "data-testid": "country"
                       }}
                     />
                   )

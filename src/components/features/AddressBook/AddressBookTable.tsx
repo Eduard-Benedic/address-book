@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { useQuery } from '@apollo/client'
-import { GET_ALL_ADDRESS_ELEMENTS } from 'operations/queries/getAllAddressElements'
+import { GET_ALL_ADDRESS_ELEMENTS } from './operations/queries/getAllAddressElements'
 import AddressBookRow from './AddressBookRow'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => (
