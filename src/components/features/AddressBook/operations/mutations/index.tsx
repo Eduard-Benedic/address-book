@@ -1,4 +1,4 @@
-import createAddressSugesstion from "./addAddressSugesstion"
+import createAddressSugesstion from "./addAddressSuggestion"
 import switchModalStates from "./switchModalStates"
 import { addressListVar, modalStatesVar } from "cache"
 

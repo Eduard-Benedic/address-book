@@ -64,7 +64,7 @@ const ManualAddressModal = () => {
 
   return (
     <Box>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog data-testid="manual-address-modal" open={open} onClose={handleClose}>
           <DialogTitle>Add an address</DialogTitle>
           <DialogContent>
             <DialogContentText sx={{ marginBottom: '40px' }}>
@@ -75,6 +75,7 @@ const ManualAddressModal = () => {
                 sx={{ width: '100%', marginBottom: '1.5rem' }}
                 id="line1"
                 label="Line 1"
+                required
                 error={!!errors.line1}
                 helperText={errors?.line1?.message}
                 inputProps={{
@@ -108,6 +109,7 @@ const ManualAddressModal = () => {
                 sx={{ width: '100%', marginBottom: '1.5rem' }}
                 id="town"
                 label="Town"
+                required
                 error={!!errors.town}
                 helperText={errors?.town?.message}
                 inputProps={{
@@ -119,6 +121,7 @@ const ManualAddressModal = () => {
                 sx={{ width: '100%', marginBottom: '1.5rem' }}
                 id="postcode"
                 label="Postcode"
+                required
                 error={!!errors.postcode}
                 helperText={errors?.postcode?.message}
                 inputProps={{
@@ -148,6 +151,7 @@ const ManualAddressModal = () => {
                   return (
                     <TextField
                       error={!!errors.country}
+                      required
                       {...registerCreator('country', true)}
                       {...params}
                       label="Choose a country"

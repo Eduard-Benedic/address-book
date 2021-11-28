@@ -13,7 +13,6 @@ import ManualAddressModal from "./ManualAddressModal"
 import LookupAddressModal from './LookupAddressModal'
 
 const ActionBar = () => {
-
   const [isLookupMode, setIsLookupMode] = React.useState<boolean>(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +29,6 @@ const ActionBar = () => {
         <ManualAddressModal />
         <LookupAddressModal />
       </Box>
-
     <Button
       sx={{ marginRight: 10 }}
       variant="contained"
@@ -43,7 +41,7 @@ const ActionBar = () => {
         <FormLabel component="legend">Enable lookup mode</FormLabel>
         <FormGroup>
           <FormControlLabel
-            control={<Switch checked={isLookupMode} onChange={handleChange} name="Lookup Mpde"/>}
+            control={<Switch checked={isLookupMode} onChange={handleChange} name="Lookup Mode"/>}
             label="Lookup" />
         </FormGroup>
       </FormControl>

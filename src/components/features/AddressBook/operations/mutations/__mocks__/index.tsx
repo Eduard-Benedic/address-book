@@ -1,3 +1,4 @@
 export const addressMutations = {
-  addAddress: jest.fn()
+  addAddress: jest.fn(),
+  switchModalStates: jest.fn()
 }

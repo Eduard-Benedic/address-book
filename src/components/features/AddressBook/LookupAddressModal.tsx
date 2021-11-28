@@ -48,6 +48,14 @@ const LookupAddressModal = () => {
   const handleClose = () => {
     addressMutations.switchModalStates(false, false)
   }
+  const handleAddressSelection = () => {
+    setTimeout(() => {
+      setAddressSuggestions({
+        addresses: [],
+        postcode: ''
+      })
+    }, 500)
+  }
 
   /** * @remarks the API endpoint used requires a specific format(no spaces and lowercase)*/
   const formatPostcode = (text: string) => text.trim().replace(/ /g,'').toLowerCase()
@@ -58,7 +66,8 @@ const LookupAddressModal = () => {
       }
       setErrorAndLoadingState(false, '', true)
       fetchAddress(formatPostcode(postcodeInput))
-        .then((data: any) => {
+        .then((res: any) => {
+          const { data } = res
           setErrorAndLoadingState(false, '', false)
           setAddressSuggestions({
             addresses: data.addresses,
@@ -74,6 +83,7 @@ const LookupAddressModal = () => {
           <DialogTitle>Please enter a postcode</DialogTitle>
           <DialogContent>
               <TextField
+                onChange={(e) => setPostcodeInput(e.target.value)}
                 error={errorAndLoadingState.hasError}
                 helperText={errorAndLoadingState.message}
                 autoFocus
@@ -87,7 +97,6 @@ const LookupAddressModal = () => {
                 fullWidth
                 variant="standard"
                 value={postcodeInput}
-                onChange={(e) => setPostcodeInput(e.target.value)}
               />
               <List sx={{ minHeight: '100px' }}>
                 {
@@ -105,6 +114,7 @@ const LookupAddressModal = () => {
                       return (
                         <AddressSuggestionItem
                           key={uuidv4()}
+                          onAddressSelection={handleAddressSelection}
                           line={[line_1, line_2, line_3]}
                           town={town_or_city}
                           country={country}

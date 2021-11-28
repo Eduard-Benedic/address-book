@@ -64,7 +64,7 @@ describe('LookupAddressModal.tsx', () => {
       const suggestionItems = getAllByTestId('address-suggestion-item')
       const spinner = queryByTestId('spinner')
 
-      expect(suggestionItems.length).toEqual(data.addresses.length)
+      expect(suggestionItems.length).toEqual(data.data.addresses.length)
       expect(spinner).toBeNull()
     })
   })
