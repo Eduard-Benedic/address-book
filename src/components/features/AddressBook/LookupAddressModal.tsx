@@ -56,7 +56,7 @@ const LookupAddressModal = () => {
           setErrorAndLoadingState(false, '', false)
           setLookupValues(data.addresses)
         })
-        .catch((err) => setErrorAndLoadingState(true, err.response.data.Message, false))
+        .catch((err) => setErrorAndLoadingState(false, err.response.data.Message, false))
   }
 
   return (

@@ -23,7 +23,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => (
 ))
 
 const AddressBookTable = () => {
-  const { data, loading } = useQuery(GET_ALL_ADDRESS_ELEMENTS, {
+  const { data } = useQuery(GET_ALL_ADDRESS_ELEMENTS, {
     fetchPolicy: 'cache-and-network'
   })
   return (
