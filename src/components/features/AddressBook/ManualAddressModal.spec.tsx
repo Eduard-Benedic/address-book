@@ -3,7 +3,7 @@ import { fireEvent, waitFor } from '@testing-library/dom'
 import { MockedProvider } from '@apollo/client/testing'
 import ManualAddressModal from './ManualAddressModal'
 // import { addressMutations } from './operations/mutations/index'
-import { createCacheWithDefaults } from './apollo/fakeCache'
+import { createCacheWithDefaults } from './apollo/createCache'
 
 jest.mock('./operations/mutations/index')
 // const addressMutationsMocked = mocked(addressMutations, true)

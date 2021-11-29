@@ -1,7 +1,6 @@
 import { InMemoryCache, ReactiveVar, makeVar } from '@apollo/client'
 import { AddressBookRowType } from 'components/features/AddressBook/AddressBookRow'
 
-
 type AddressBookRowList = AddressBookRowType[]
 type ModalStates = {
   lookup: boolean

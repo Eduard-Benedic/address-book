@@ -3,7 +3,7 @@ import { fireEvent } from '@testing-library/dom'
 import { mocked } from 'ts-jest/utils'
 import { MockedProvider } from '@apollo/client/testing'
 import ActionBar from './ActionBar'
-import { createCacheWithDefaults } from './apollo/fakeCache'
+import { createCacheWithDefaults } from './apollo/createCache'
 import { addressMutations } from './operations/mutations'
 
 jest.mock('./operations/mutations/index')

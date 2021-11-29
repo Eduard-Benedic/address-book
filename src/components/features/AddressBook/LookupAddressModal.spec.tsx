@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils'
 import LookupAddressModal from './LookupAddressModal'
 import { addressMutations } from './operations/mutations/index'
 import { data } from './fakeData/index'
-import { createCacheWithDefaults } from './apollo/fakeCache'
+import { createCacheWithDefaults } from './apollo/createCache'
 
 jest.mock('./AddressBookAPI')
 jest.mock('./operations/mutations/index')
