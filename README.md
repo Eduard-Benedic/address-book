@@ -8,5 +8,3 @@ In order to see the application running simply fetch the repository on your comp
 
 **REACT_APP_API_SECRET=YOUR-API-KEY**.
 This key is used inside the `AddressBookAPI.ts` file.
-
-I had fun creating this app and looking forward to hearing back from the team.
